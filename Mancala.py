@@ -72,6 +72,7 @@ def print_game_state(board):
 
 
 def main():
+    print("TEST")
     # screen Setup
     screen = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
     clock = pygame.time.Clock()
