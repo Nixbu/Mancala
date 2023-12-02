@@ -1,3 +1,5 @@
+import pygame
+
 from utils import *
 
 
@@ -70,10 +72,112 @@ def print_game_state(board):
     print(f"Player 1 num of beads: {board.lower_store.num_of_beads}")
     print(f"Player 2 num of beads: {board.upper_store.num_of_beads}")
 
-
+# TODO Create 2 options - 1v1 or AI vs Player, 2 different windows, and a main window
 def main():
+    # 1v1 or AI
+    option = input("1 for AI, 2 for 1v1: ")
+
+    if option == "1":
+        ai_game()
+    elif option == "2":
+        one_vs_one()
+
+def ai_game():
     # screen Setup
     screen = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
+    pygame.display.set_caption("Mancala")
+    clock = pygame.time.Clock()
+
+    # Board Setup
+    board = Board(screen)
+    board.initialize()
+
+    # Game Variables
+    running = True
+    turn = random.choice([True, False])
+    print(turn)
+    turn_pits = board.lower_pits.items() if turn else board.upper_pits.items()
+    winner = None
+    computer = AIPlayer(board, 3)
+
+    # Game Loop
+    while running:
+
+        # Get keyboard state
+        keys = pygame.key.get_pressed()
+
+        # poll for events
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                running = False
+
+            if keys[pygame.K_ESCAPE]:
+                running = False
+
+        if turn:
+            # Check if mouse clicked
+            if pygame.mouse.get_pressed(3)[0]:
+                mouse_pos = pygame.mouse.get_pos()
+
+                # Turn logic
+                for num, pit in turn_pits:
+                    # Check if pit is clicked
+                    if pit.clicked(mouse_pos) and len(pit.beads) != 0:
+                        # Spread the beads
+                        another_turn = spread_beads(num, pit, turn, board)
+
+                        print_game_state(board)
+
+                        # Check if the game ended
+                        if check_empty(turn_pits):
+                            winner = find_winner(board)
+                            break
+
+                        # Check if the player gets another turn
+                        if not another_turn:
+                            turn = not turn
+                            turn_pits = board.lower_pits.items() if turn else board.upper_pits.items()
+
+                        print(turn)
+
+        else:
+            move = str(computer.choose_best_move() + 1)
+            pit = turn_pits[move]
+            another_turn = spread_beads(move, pit, turn, board)
+
+            print_game_state(board)
+
+            # Check if the game ended
+            if check_empty(turn_pits):
+                winner = find_winner(board)
+                break
+
+            # Check if the player gets another turn
+            if not another_turn:
+                turn = not turn
+                turn_pits = board.lower_pits.items() if turn else board.upper_pits.items()
+
+            print(turn)
+
+        # Check if there is a winner
+        if winner is not None:
+            print(f"The winner is... {winner}!")
+            pygame.time.wait(5000)
+            break
+
+        draw(screen, board)
+
+        # limits FPS to 60
+        clock.tick(60)
+
+    pygame.quit()
+
+
+def one_vs_one():
+    # screen Setup
+    screen = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
+    pygame.display.set_caption("Mancala")
     clock = pygame.time.Clock()
 
     # Board Setup
