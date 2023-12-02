@@ -7,7 +7,7 @@ class Board:
         self.upper_store = Store(screen, UP_STORE_BUFFER)
         self.lower_store = Store(screen, DOWN_STORE_BUFFER)
         self.upper_pits = {str(num): CirclePit(screen, center) for num, center in UP_PIT_DIC.items()}
-        self.lower_pits = {str(num): CirclePit(screen, center) for num, center in  LOW_PIT_DIC.items()}
+        self.lower_pits = {str(num): CirclePit(screen, center) for num, center in LOW_PIT_DIC.items()}
 
     def initialize(self):
         self.upper_store.remove_beads()
@@ -28,3 +28,4 @@ class Board:
 
         for pit in self.lower_pits.values():
             pit.draw()
+
