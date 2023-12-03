@@ -52,7 +52,7 @@ def spread_beads(num, pit, turn, board):
 
 
 def check_empty(turn_pits):
-    for _, pit in turn_pits:
+    for _, pit in turn_pits.items():
         if pit.num_of_beads > 0:
             return False
 
@@ -96,9 +96,9 @@ def ai_game():
     running = True
     turn = random.choice([True, False])
     print(turn)
-    turn_pits = board.lower_pits.items() if turn else board.upper_pits.items()
+    turn_pits = board.lower_pits if turn else board.upper_pits
     winner = None
-    computer = AIPlayer(board, 3)
+    computer = AIPlayer(board, 9)
 
     # Game Loop
     while running:
@@ -115,13 +115,14 @@ def ai_game():
             if keys[pygame.K_ESCAPE]:
                 running = False
 
+        # Human turn
         if turn:
             # Check if mouse clicked
             if pygame.mouse.get_pressed(3)[0]:
                 mouse_pos = pygame.mouse.get_pos()
 
                 # Turn logic
-                for num, pit in turn_pits:
+                for num, pit in turn_pits.items():
                     # Check if pit is clicked
                     if pit.clicked(mouse_pos) and len(pit.beads) != 0:
                         # Spread the beads
@@ -137,13 +138,15 @@ def ai_game():
                         # Check if the player gets another turn
                         if not another_turn:
                             turn = not turn
-                            turn_pits = board.lower_pits.items() if turn else board.upper_pits.items()
+                            turn_pits = board.lower_pits if turn else board.upper_pits
 
                         print(turn)
 
+        # AI turn
         else:
             move = str(computer.choose_best_move() + 1)
-            pit = turn_pits[move]
+            print(move)
+            pit = turn_pits.get(move)
             another_turn = spread_beads(move, pit, turn, board)
 
             print_game_state(board)
@@ -156,7 +159,7 @@ def ai_game():
             # Check if the player gets another turn
             if not another_turn:
                 turn = not turn
-                turn_pits = board.lower_pits.items() if turn else board.upper_pits.items()
+                turn_pits = board.lower_pits if turn else board.upper_pits
 
             print(turn)
 
@@ -188,7 +191,7 @@ def one_vs_one():
     running = True
     turn = random.choice([True, False])
     print(turn)
-    turn_pits = board.lower_pits.items() if turn else board.upper_pits.items()
+    turn_pits = board.lower_pits if turn else board.upper_pits
     winner = None
 
     # Game Loop
@@ -211,7 +214,7 @@ def one_vs_one():
             mouse_pos = pygame.mouse.get_pos()
 
             # Turn logic
-            for num, pit in turn_pits:
+            for num, pit in turn_pits.items():
                 # Check if pit is clicked
                 if pit.clicked(mouse_pos) and len(pit.beads) != 0:
 
@@ -228,7 +231,7 @@ def one_vs_one():
                     # Check if the player gets another turn
                     if not another_turn:
                         turn = not turn
-                        turn_pits = board.lower_pits.items() if turn else board.upper_pits.items()
+                        turn_pits = board.lower_pits if turn else board.upper_pits
 
                     print(turn)
 

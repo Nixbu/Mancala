@@ -10,8 +10,8 @@ class SimulatedBoard:
         self.current_pits = None
 
     def initialize(self):
-        self.lower_pits_state = [pit.num_of_beads for pit in self.board.lower_pits.values]
-        self.upper_pits_state = [pit.num_of_beads for pit in self.board.upper_pits.values]
+        self.lower_pits_state = [pit.num_of_beads for pit in self.board.lower_pits.values()]
+        self.upper_pits_state = [pit.num_of_beads for pit in self.board.upper_pits.values()]
         self.side = self.turn
         self.my_store = self.board.lower_store.num_of_beads if self.side else self.board.upper_store.num_of_beads
         self.rival_store = self.board.lower_store.num_of_beads if not self.side else self.board.upper_store.num_of_beads
@@ -52,8 +52,8 @@ class SimulatedBoard:
             self.turn = not self.turn
 
     def is_over(self):
-        return (all(pit.num_of_beads == 0 for pit in self.lower_pits_state)
-                or all(pit.num_of_beads == 0 for pit in self.upper_pits_state))
+        return (all(bead_num == 0 for bead_num in self.lower_pits_state)
+                or all(bead_num == 0 for bead_num in self.upper_pits_state))
 
     def evaluate(self):
         return self.my_store - self.rival_store
