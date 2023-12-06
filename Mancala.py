@@ -98,7 +98,7 @@ def ai_game():
     print(turn)
     turn_pits = board.lower_pits if turn else board.upper_pits
     winner = None
-    computer = AIPlayer(board, 9)
+    computer = AIPlayer(board, 3)
 
     # Game Loop
     while running:
@@ -106,7 +106,7 @@ def ai_game():
         # Get keyboard state
         keys = pygame.key.get_pressed()
 
-        # poll for events
+        # Poll for events
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
