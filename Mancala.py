@@ -3,7 +3,7 @@ import pygame
 from utils import *
 
 
-def draw(screen, board):
+def draw_board(screen, board):
     screen.blit(BOARD_IMG, (0, 0))
     board.draw_board()
     pygame.display.flip()
@@ -42,7 +42,7 @@ def spread_beads(num, pit, turn, board):
             curr_pit.update_next_bead_pos()
             curr_pit_num -= 1
 
-        draw(board.screen, board)
+        draw_board(board.screen, board)
         pygame.time.wait(500)
 
         spread_length -= 1
@@ -73,14 +73,61 @@ def print_game_state(board):
     print(f"Player 2 num of beads: {board.upper_store.num_of_beads}")
 
 # TODO Create 2 options - 1v1 or AI vs Player, 2 different windows, and a main window
-def main():
-    # 1v1 or AI
-    option = input("1 for AI, 2 for 1v1: ")
+def draw_main_screen(main_window, main_title, ai_option, one_vs_one_option):
+    main_window.blit(BOARD_IMG, (0, 0))
+    main_window.blit(main_title, (SCR_WIDTH // 2 - main_title.get_width() // 2,
+                                  SCR_HEIGHT // 2 - main_title.get_height() // 2))
+    ai_option.draw()
+    one_vs_one_option.draw()
+    pygame.display.flip()
 
-    if option == "1":
-        ai_game()
-    elif option == "2":
-        one_vs_one()
+
+def get_font(font_name, size):
+    return pygame.font.SysFont(font_name, size)
+
+
+def main():
+    # Main window setup
+    main_window = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
+    pygame.display.set_caption("Mancala")
+
+    # Main title setup
+    main_title = get_font("Times new roman", 40).render("MANCALA", 1, BLACK)
+
+    # Main screen game variables
+    running = True
+    ai_option = Button(main_window, "AI Player", 0, 300)
+    one_vs_one_option = Button(main_window, "One vs One", 0, 450)
+    ai_option.center()
+    one_vs_one_option.center()
+
+    while running:
+        keys = pygame.key.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                running = False
+
+            if keys[pygame.K_ESCAPE]:
+                running = False
+
+        # Check if the mouse is clicked
+        if pygame.mouse.get_pressed(3)[0]:
+            # AI player game
+            if ai_option.is_clicked(mouse_pos):
+                ai_game()
+                break
+
+            # 1 vs 1 Game
+            if one_vs_one_option.is_clicked(mouse_pos):
+                one_vs_one()
+                break
+
+        draw_main_screen(main_window, main_title, ai_option, one_vs_one_option)
+
+    pygame.quit()
 
 def ai_game():
     # screen Setup
@@ -144,6 +191,7 @@ def ai_game():
 
         # AI turn
         else:
+            pygame.time.wait(500)
             move = str(computer.choose_best_move() + 1)
             print(move)
             pit = turn_pits.get(move)
@@ -169,7 +217,7 @@ def ai_game():
             pygame.time.wait(5000)
             break
 
-        draw(screen, board)
+        draw_board(screen, board)
 
         # limits FPS to 60
         clock.tick(60)
@@ -241,7 +289,7 @@ def one_vs_one():
             pygame.time.wait(5000)
             break
 
-        draw(screen, board)
+        draw_board(screen, board)
 
         # limits FPS to 60
         clock.tick(60)

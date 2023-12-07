@@ -4,5 +4,6 @@ from .Board import *
 import random
 from .AI_Player import *
 from .SimulatedBoard import *
+from .Button import *
 
 pygame.init()
