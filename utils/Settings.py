@@ -11,7 +11,7 @@ BOARD_IMG = pygame.transform.scale_by(BOARD_IMG, 0.75)
 SCR_WIDTH, SCR_HEIGHT = 800, BOARD_IMG.get_height()
 
 # Backgrounds
-BACKGROUND_IMG = pygame.image.load(os.path.join('assets', 'CarpetBackground.png'))
+BACKGROUND_IMG = pygame.image.load(os.path.join('assets', 'CarpetBackground4.png'))
 BACKGROUND_IMG = pygame.transform.scale(BACKGROUND_IMG, (SCR_WIDTH, SCR_HEIGHT))
 
 # Beads
