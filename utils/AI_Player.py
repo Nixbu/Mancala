@@ -16,7 +16,7 @@ class AIPlayer:
             if sim_board.current_pits[move] != 0:
                 new_sim_board = sim_board.create_copy()
                 new_sim_board.make_move(move)
-                evaluation = minimax(new_sim_board, self.depth, False, -inf, inf)
+                evaluation = minimax(new_sim_board, self.depth, new_sim_board.turn, -inf, inf)
 
                 if evaluation > best_eval:
                     best_eval = evaluation
