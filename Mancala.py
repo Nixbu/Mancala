@@ -5,7 +5,7 @@ from utils import *
 
 def draw_board(screen, board):
     screen.blit(BACKGROUND_IMG, (0, 0))
-    screen.blit(BOARD_IMG, (0, 0))
+    screen.blit(BOARD_IMG, (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
     board.draw_board()
     pygame.display.flip()
 
@@ -75,7 +75,7 @@ def print_game_state(board):
 
 def draw_main_screen(main_window, main_title, ai_option, one_vs_one_option):
     main_window.blit(BACKGROUND_IMG, (0, 0))
-    main_window.blit(BOARD_IMG, (0, 0))
+    main_window.blit(BOARD_IMG, (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
     main_window.blit(main_title, (SCR_WIDTH // 2 - main_title.get_width() // 2,
                                   SCR_HEIGHT // 2 - main_title.get_height() // 2))
     ai_option.draw()
@@ -260,6 +260,7 @@ def one_vs_one():
         # Check if mouse clicked
         if pygame.mouse.get_pressed(3)[0]:
             mouse_pos = pygame.mouse.get_pos()
+            print(mouse_pos)
 
             # Turn logic
             for num, pit in turn_pits.items():
