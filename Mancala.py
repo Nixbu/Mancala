@@ -4,6 +4,7 @@ from utils import *
 
 
 def draw_board(screen, board):
+    screen.blit(BACKGROUND_IMG, (0, 0))
     screen.blit(BOARD_IMG, (0, 0))
     board.draw_board()
     pygame.display.flip()
@@ -73,6 +74,7 @@ def print_game_state(board):
     print(f"Player 2 num of beads: {board.upper_store.num_of_beads}")
 
 def draw_main_screen(main_window, main_title, ai_option, one_vs_one_option):
+    main_window.blit(BACKGROUND_IMG, (0, 0))
     main_window.blit(BOARD_IMG, (0, 0))
     main_window.blit(main_title, (SCR_WIDTH // 2 - main_title.get_width() // 2,
                                   SCR_HEIGHT // 2 - main_title.get_height() // 2))
@@ -161,6 +163,8 @@ def ai_game():
             if keys[pygame.K_ESCAPE]:
                 running = False
 
+        draw_board(screen, board)
+
         # Human turn
         if turn:
             # Check if mouse clicked
@@ -190,7 +194,6 @@ def ai_game():
 
         # AI turn
         else:
-            pygame.time.wait(500)
             move = str(computer.choose_best_move() + 1)
             print(move)
             pit = turn_pits.get(move)
@@ -215,8 +218,6 @@ def ai_game():
             print(f"The winner is... {winner}!")
             pygame.time.wait(5000)
             break
-
-        draw_board(screen, board)
 
         # limits FPS to 60
         clock.tick(60)

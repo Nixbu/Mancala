@@ -7,6 +7,13 @@ pygame.font.init()
 BOARD_IMG = pygame.image.load(os.path.join('assets', 'Board.png'))
 BOARD_IMG = pygame.transform.scale_by(BOARD_IMG, 0.75)
 
+# Screen
+SCR_WIDTH, SCR_HEIGHT = 800, BOARD_IMG.get_height()
+
+# Backgrounds
+BACKGROUND_IMG = pygame.image.load(os.path.join('assets', 'CarpetBackground.png'))
+BACKGROUND_IMG = pygame.transform.scale(BACKGROUND_IMG, (SCR_WIDTH, SCR_HEIGHT))
+
 # Beads
 INITIAL_BEAD_NUM = 6
 BEAD_RADIUS = 7
@@ -34,8 +41,7 @@ STORE_BUFFER = 20
 UP_STORE_BUFFER = 280
 DOWN_STORE_BUFFER = 430
 
-# Screen
-SCR_WIDTH, SCR_HEIGHT = BOARD_IMG.get_width(), BOARD_IMG.get_height()
+
 
 # Fonts
 default_font = pygame.font.Font(None, 30)
