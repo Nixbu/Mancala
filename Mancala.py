@@ -72,7 +72,6 @@ def print_game_state(board):
     print(f"Player 1 num of beads: {board.lower_store.num_of_beads}")
     print(f"Player 2 num of beads: {board.upper_store.num_of_beads}")
 
-# TODO Create 2 options - 1v1 or AI vs Player, 2 different windows, and a main window
 def draw_main_screen(main_window, main_title, ai_option, one_vs_one_option):
     main_window.blit(BOARD_IMG, (0, 0))
     main_window.blit(main_title, (SCR_WIDTH // 2 - main_title.get_width() // 2,
@@ -145,7 +144,7 @@ def ai_game():
     print(turn)
     turn_pits = board.lower_pits if turn else board.upper_pits
     winner = None
-    computer = AIPlayer(board, 3)
+    computer = AIPlayer(board, 12)
 
     # Game Loop
     while running:

@@ -1,3 +1,6 @@
+import math
+
+
 class SimulatedBoard:
     def __init__(self, board, turn):
         self.board = board
@@ -17,7 +20,7 @@ class SimulatedBoard:
         self.my_store = self.board.lower_store.num_of_beads if self.side else self.board.upper_store.num_of_beads
         self.rival_store = self.board.lower_store.num_of_beads if not self.side else self.board.upper_store.num_of_beads
         self.current_pits = self.lower_pits_state if self.side else self.upper_pits_state
-        self.turn_count = 1
+        self.turn_count = 0
 
     def create_copy(self):
         board_copy = SimulatedBoard(self.board, self.turn)
@@ -64,13 +67,12 @@ class SimulatedBoard:
                 or all(bead_num == 0 for bead_num in self.upper_pits_state))
 
     def evaluate(self):
-        evaluation = 0
-        for pit_num, beads_num in enumerate(self.upper_pits_state):
-            if beads_num % 7 == pit_num + 1:
-                evaluation += 1
-        evaluation += self.my_store - self.rival_store + self.turn_count
+        if self.is_over() and self.my_store > self.rival_store:
+            return math.inf
+        else:
+            return self.my_store - self.rival_store
 
-        return evaluation
+
 
 
 
