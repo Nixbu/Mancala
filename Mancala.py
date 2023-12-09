@@ -146,7 +146,7 @@ def ai_game():
     print(turn)
     turn_pits = board.lower_pits if turn else board.upper_pits
     winner = None
-    computer = AIPlayer(board, 12)
+    computer = AIPlayer(board, 10)
 
     # Game Loop
     while running:
