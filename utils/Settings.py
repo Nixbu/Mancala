@@ -44,6 +44,9 @@ DOWN_STORE_BUFFER = 430
 # Fonts
 default_font = pygame.font.Font(None, 30)
 
+def get_font(font_name, size):
+    return pygame.font.SysFont(font_name, size)
+
 # Colors
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)

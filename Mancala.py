@@ -3,12 +3,16 @@ import pygame
 from utils import *
 
 
-def draw_board(screen, board):
+def draw_board(screen, board, mouse_pos):
+    # Draw the background, board and beads
     screen.blit(BACKGROUND_IMG, (0, 0))
     screen.blit(BOARD_IMG, (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
     board.draw_board()
-    pygame.display.flip()
+    mouse_pos = pygame.mouse.get_pos()
+    # Check if a pit is floated on to display the amount of beads in it
+    check_floating(board, mouse_pos)
 
+    pygame.display.flip()
 
 def spread_beads(num, pit, turn, board):
     curr_pit_num = int(num) - 1
@@ -43,7 +47,8 @@ def spread_beads(num, pit, turn, board):
             curr_pit.update_next_bead_pos()
             curr_pit_num -= 1
 
-        draw_board(board.screen, board)
+        mouse_pos = pygame.mouse.get_pos()
+        draw_board(board.screen, board, mouse_pos)
         pygame.time.wait(500)
 
         spread_length -= 1
@@ -81,11 +86,6 @@ def draw_main_screen(main_window, main_title, ai_option, one_vs_one_option):
     ai_option.draw()
     one_vs_one_option.draw()
     pygame.display.flip()
-
-
-def get_font(font_name, size):
-    return pygame.font.SysFont(font_name, size)
-
 
 def main():
     # Main window setup
@@ -153,6 +153,7 @@ def ai_game():
 
         # Get keyboard state
         keys = pygame.key.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
 
         # Poll for events
         for event in pygame.event.get():
@@ -163,18 +164,17 @@ def ai_game():
             if keys[pygame.K_ESCAPE]:
                 running = False
 
-        draw_board(screen, board)
+        draw_board(screen, board, mouse_pos)
 
         # Human turn
         if turn:
             # Check if mouse clicked
             if pygame.mouse.get_pressed(3)[0]:
-                mouse_pos = pygame.mouse.get_pos()
 
                 # Turn logic
                 for num, pit in turn_pits.items():
                     # Check if pit is clicked
-                    if pit.clicked(mouse_pos) and len(pit.beads) != 0:
+                    if pit.collided(mouse_pos) and len(pit.beads) != 0:
                         # Spread the beads
                         another_turn = spread_beads(num, pit, turn, board)
 
@@ -225,6 +225,16 @@ def ai_game():
     pygame.quit()
 
 
+def check_floating_in(pits, mouse_pos):
+    for pit in pits:
+        if pit.collided(mouse_pos):
+            pit.draw_amount()
+
+
+def check_floating(board, mouse_pos):
+    check_floating_in(board.lower_pits.values(), mouse_pos)
+    check_floating_in(board.upper_pits.values(), mouse_pos)
+
 def one_vs_one():
     # screen Setup
     screen = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
@@ -257,15 +267,15 @@ def one_vs_one():
             if keys[pygame.K_ESCAPE]:
                 running = False
 
+        mouse_pos = pygame.mouse.get_pos()
+
         # Check if mouse clicked
         if pygame.mouse.get_pressed(3)[0]:
-            mouse_pos = pygame.mouse.get_pos()
-            print(mouse_pos)
 
             # Turn logic
             for num, pit in turn_pits.items():
                 # Check if pit is clicked
-                if pit.clicked(mouse_pos) and len(pit.beads) != 0:
+                if pit.collided(mouse_pos) and len(pit.beads) != 0:
 
                     # Spread the beads
                     another_turn = spread_beads(num, pit, turn, board)
@@ -290,7 +300,7 @@ def one_vs_one():
             pygame.time.wait(5000)
             break
 
-        draw_board(screen, board)
+        draw_board(screen, board, mouse_pos)
 
         # limits FPS to 60
         clock.tick(60)

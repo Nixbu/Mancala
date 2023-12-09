@@ -30,7 +30,7 @@ class CirclePit(Pit):
     def draw_frame(self):
         pygame.draw.circle(self.screen, WHITE, self.center, self.radius, width=1)
 
-    def clicked(self, mouse_pos):
+    def collided(self, mouse_pos):
         return self.rect.collidepoint(mouse_pos[0], mouse_pos[1])
 
     def update_next_bead_pos(self):
@@ -38,3 +38,9 @@ class CirclePit(Pit):
                                  + (self.num_of_beads * BEAD_DIAMETER) % (3 * BEAD_DIAMETER))
         self.next_bead_pos[1] = (self.center[1] - 2 * BEAD_DIAMETER +
                                  ((self.num_of_beads * BEAD_DIAMETER) // (3 * BEAD_DIAMETER)) * BEAD_DIAMETER)
+
+    def draw_amount(self):
+        amount = default_font.render(str(self.num_of_beads), 1, BLACK)
+        self.screen.blit(amount, self.center)
+        pygame.display.flip()
+
