@@ -3,12 +3,12 @@ import pygame
 from utils import *
 
 
-def draw_board(screen, board, mouse_pos):
+def draw_board(screen, board, mouse_pos=(0, 0)):
     # Draw the background, board and beads
     screen.blit(BACKGROUND_IMG, (0, 0))
     screen.blit(BOARD_IMG, (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
     board.draw_board()
-    mouse_pos = pygame.mouse.get_pos()
+
     # Check if a pit is floated on to display the amount of beads in it
     check_floating(board, mouse_pos)
 
@@ -47,8 +47,7 @@ def spread_beads(num, pit, turn, board):
             curr_pit.update_next_bead_pos()
             curr_pit_num -= 1
 
-        mouse_pos = pygame.mouse.get_pos()
-        draw_board(board.screen, board, mouse_pos)
+        draw_board(board.screen, board)
         pygame.time.wait(500)
 
         spread_length -= 1
@@ -58,7 +57,7 @@ def spread_beads(num, pit, turn, board):
 
 
 def check_empty(turn_pits):
-    for _, pit in turn_pits.items():
+    for pit in turn_pits.values():
         if pit.num_of_beads > 0:
             return False
 
@@ -146,7 +145,7 @@ def ai_game():
     print(turn)
     turn_pits = board.lower_pits if turn else board.upper_pits
     winner = None
-    computer = AIPlayer(board, 10)
+    computer = AIPlayer(board, 11)
 
     # Game Loop
     while running:
@@ -194,7 +193,7 @@ def ai_game():
 
         # AI turn
         else:
-            move = str(computer.choose_best_move() + 1)
+            move = str(computer.choose_best_move())
             print(move)
             pit = turn_pits.get(move)
             another_turn = spread_beads(move, pit, turn, board)
@@ -257,6 +256,9 @@ def one_vs_one():
 
         # Get keyboard state
         keys = pygame.key.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
+
+        draw_board(screen, board, mouse_pos)
 
         # poll for events
         for event in pygame.event.get():
@@ -266,8 +268,6 @@ def one_vs_one():
 
             if keys[pygame.K_ESCAPE]:
                 running = False
-
-        mouse_pos = pygame.mouse.get_pos()
 
         # Check if mouse clicked
         if pygame.mouse.get_pressed(3)[0]:
@@ -299,8 +299,6 @@ def one_vs_one():
             print(f"The winner is... {winner}!")
             pygame.time.wait(5000)
             break
-
-        draw_board(screen, board, mouse_pos)
 
         # limits FPS to 60
         clock.tick(60)

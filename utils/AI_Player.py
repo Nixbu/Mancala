@@ -22,7 +22,7 @@ class AIPlayer:
                     best_eval = evaluation
                     best_move = move
 
-        return best_move
+        return best_move + 1
 
 def minimax(sim_board, depth, minimizing_player, alpha, beta):
     """
