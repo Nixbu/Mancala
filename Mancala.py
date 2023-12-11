@@ -62,7 +62,9 @@ def spread_beads(num, pit, turn, board):
             curr_pit.update_next_bead_pos()
             curr_pit_num -= 1
 
+        # Update window
         board.draw_board()
+        pygame.display.flip()
         pygame.time.wait(500)
 
         spread_length -= 1
