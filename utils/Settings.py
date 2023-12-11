@@ -7,6 +7,12 @@ pygame.font.init()
 BOARD_IMG = pygame.image.load(os.path.join('assets', 'Game Assets', 'Board.png'))
 BOARD_IMG = pygame.transform.scale_by(BOARD_IMG, 0.75)
 
+PLAYER1_TURN_BOARD = pygame.image.load(os.path.join('assets', 'Game Assets', 'Player1_turn_board.png'))
+PLAYER1_TURN_BOARD = pygame.transform.scale_by(PLAYER1_TURN_BOARD, 0.75)
+
+PLAYER2_TURN_BOARD = pygame.image.load(os.path.join('assets', 'Game Assets', 'Player2_turn_board.png'))
+PLAYER2_TURN_BOARD = pygame.transform.scale_by(PLAYER2_TURN_BOARD, 0.75)
+
 # Screen
 SCR_WIDTH, SCR_HEIGHT = 800, BOARD_IMG.get_height()
 

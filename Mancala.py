@@ -6,7 +6,6 @@ from utils import *
 def draw_board(screen, board, mouse_pos=(0, 0)):
     # Draw the background, board and beads
     screen.blit(BACKGROUND_IMG, (0, 0))
-    screen.blit(BOARD_IMG, (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
     board.draw_board()
 
     # Check if a pit is floated on to display the amount of beads in it
@@ -19,6 +18,7 @@ def spread_beads(num, pit, turn, board):
     board_side = board.lower_pits if turn else board.upper_pits
     playing_store = board.lower_store if turn else board.upper_store
     spread_length = pit.num_of_beads
+    board.background_img = BOARD_IMG
 
     while spread_length > 0:
 
@@ -129,6 +129,11 @@ def main():
 
     pygame.quit()
 
+
+# def check_another_turn(num, pit):
+#     return (pit.num_of_beads - int(num)) % 7
+
+
 def ai_game():
     # screen Setup
     screen = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
@@ -144,6 +149,8 @@ def ai_game():
     turn = random.choice([True, False])
     print(turn)
     turn_pits = board.lower_pits if turn else board.upper_pits
+    board.background_img = PLAYER1_TURN_BOARD if turn else PLAYER2_TURN_BOARD
+
     winner = None
     computer = AIPlayer(board, 11)
 
@@ -175,6 +182,7 @@ def ai_game():
                     # Check if pit is clicked
                     if pit.collided(mouse_pos) and len(pit.beads) != 0:
                         # Spread the beads
+                        # another_turn = check_another_turn(num, pit)
                         another_turn = spread_beads(num, pit, turn, board)
 
                         print_game_state(board)
@@ -189,7 +197,8 @@ def ai_game():
                             turn = not turn
                             turn_pits = board.lower_pits if turn else board.upper_pits
 
-                        print(turn)
+                        # Update board image
+                        board.background_img = PLAYER1_TURN_BOARD if turn else PLAYER2_TURN_BOARD
 
         # AI turn
         else:
@@ -210,7 +219,8 @@ def ai_game():
                 turn = not turn
                 turn_pits = board.lower_pits if turn else board.upper_pits
 
-            print(turn)
+            # Update board image
+            board.background_img = PLAYER1_TURN_BOARD if turn else PLAYER2_TURN_BOARD
 
         # Check if there is a winner
         if winner is not None:
@@ -249,6 +259,7 @@ def one_vs_one():
     turn = random.choice([True, False])
     print(turn)
     turn_pits = board.lower_pits if turn else board.upper_pits
+    board.background_img = PLAYER1_TURN_BOARD if turn else PLAYER2_TURN_BOARD
     winner = None
 
     # Game Loop
@@ -291,6 +302,9 @@ def one_vs_one():
                     if not another_turn:
                         turn = not turn
                         turn_pits = board.lower_pits if turn else board.upper_pits
+
+                    # Update board image
+                    board.background_img = PLAYER1_TURN_BOARD if turn else PLAYER2_TURN_BOARD
 
                     print(turn)
 
