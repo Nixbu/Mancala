@@ -1,3 +1,5 @@
+import pygame.display
+
 from .CirclePit import *
 from .Store import *
 
@@ -33,3 +35,5 @@ class Board:
 
         for pit in self.lower_pits.values():
             pit.draw()
+
+        pygame.display.flip()

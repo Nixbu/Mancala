@@ -20,6 +20,10 @@ SCR_WIDTH, SCR_HEIGHT = 800, BOARD_IMG.get_height()
 BACKGROUND_IMG = pygame.image.load(os.path.join('assets', 'Carpets', 'CarpetBackground6.png'))
 BACKGROUND_IMG = pygame.transform.scale(BACKGROUND_IMG, (SCR_WIDTH, SCR_HEIGHT))
 
+# Player names
+PLAYER1_POS = (580, 745)
+PLAYER2_POS = (150, 20)
+
 # Beads
 INITIAL_BEAD_NUM = 6
 BEAD_RADIUS = 7

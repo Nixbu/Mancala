@@ -2,16 +2,31 @@ import pygame
 
 from utils import *
 
+"""---------------- Draw functions ----------------------"""
+def draw_main_screen(main_window, main_title, ai_option, one_vs_one_option):
+    main_window.blit(BACKGROUND_IMG, (0, 0))
+    main_window.blit(BOARD_IMG, (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
+    main_window.blit(main_title, (SCR_WIDTH // 2 - main_title.get_width() // 2,
+                                  SCR_HEIGHT // 2 - main_title.get_height() // 2))
+    ai_option.draw()
+    one_vs_one_option.draw()
+    pygame.display.flip()
 
-def draw_board(screen, board, mouse_pos=(0, 0)):
+def draw_game(screen, board, mouse_pos, player1_text, player2_text):
     # Draw the background, board and beads
-    screen.blit(BACKGROUND_IMG, (0, 0))
+    draw_background(screen, player1_text, player2_text)
     board.draw_board()
 
     # Check if a pit is floated on to display the amount of beads in it
     check_floating(board, mouse_pos)
 
     pygame.display.flip()
+
+def draw_background(screen, player1_text, player2_text):
+    screen.blit(BACKGROUND_IMG, (0, 0))
+    screen.blit(player1_text, PLAYER1_POS)
+    screen.blit(player2_text, PLAYER2_POS)
+
 
 def spread_beads(num, pit, turn, board):
     curr_pit_num = int(num) - 1
@@ -47,7 +62,7 @@ def spread_beads(num, pit, turn, board):
             curr_pit.update_next_bead_pos()
             curr_pit_num -= 1
 
-        draw_board(board.screen, board)
+        board.draw_board()
         pygame.time.wait(500)
 
         spread_length -= 1
@@ -77,14 +92,6 @@ def print_game_state(board):
     print(f"Player 1 num of beads: {board.lower_store.num_of_beads}")
     print(f"Player 2 num of beads: {board.upper_store.num_of_beads}")
 
-def draw_main_screen(main_window, main_title, ai_option, one_vs_one_option):
-    main_window.blit(BACKGROUND_IMG, (0, 0))
-    main_window.blit(BOARD_IMG, (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
-    main_window.blit(main_title, (SCR_WIDTH // 2 - main_title.get_width() // 2,
-                                  SCR_HEIGHT // 2 - main_title.get_height() // 2))
-    ai_option.draw()
-    one_vs_one_option.draw()
-    pygame.display.flip()
 
 def main():
     # Main window setup
@@ -150,6 +157,8 @@ def ai_game():
     print(turn)
     turn_pits = board.lower_pits if turn else board.upper_pits
     board.background_img = PLAYER1_TURN_BOARD if turn else PLAYER2_TURN_BOARD
+    player1_text = get_font("Arial", 30).render("Player 1", 1, WHITE)
+    player2_text = get_font("Arial", 30).render("AI Player", 1, WHITE)
 
     winner = None
     computer = AIPlayer(board, 11)
@@ -161,6 +170,8 @@ def ai_game():
         keys = pygame.key.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
 
+        draw_game(screen, board, mouse_pos, player1_text, player2_text)
+
         # Poll for events
         for event in pygame.event.get():
 
@@ -170,13 +181,10 @@ def ai_game():
             if keys[pygame.K_ESCAPE]:
                 running = False
 
-        draw_board(screen, board, mouse_pos)
-
         # Human turn
         if turn:
             # Check if mouse clicked
             if pygame.mouse.get_pressed(3)[0]:
-
                 # Turn logic
                 for num, pit in turn_pits.items():
                     # Check if pit is clicked
@@ -260,6 +268,8 @@ def one_vs_one():
     print(turn)
     turn_pits = board.lower_pits if turn else board.upper_pits
     board.background_img = PLAYER1_TURN_BOARD if turn else PLAYER2_TURN_BOARD
+    player1_text = get_font("Arial", 30).render("Player 1", 1, WHITE)
+    player2_text = get_font("Arial", 30).render("Player 2", 1, WHITE)
     winner = None
 
     # Game Loop
@@ -269,7 +279,7 @@ def one_vs_one():
         keys = pygame.key.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
 
-        draw_board(screen, board, mouse_pos)
+        draw_game(screen, board, mouse_pos, player1_text, player2_text)
 
         # poll for events
         for event in pygame.event.get():
