@@ -67,6 +67,7 @@ def ai_game():
         mouse_pos = pygame.mouse.get_pos()
 
         game.draw()
+        game.mid_move = False
 
         game.poll_events(keys)
 
@@ -114,6 +115,7 @@ def one_vs_one():
         mouse_pos = pygame.mouse.get_pos()
 
         game.draw()
+        game.mid_move = False
 
         game.poll_events(keys)
 

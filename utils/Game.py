@@ -25,9 +25,7 @@ class Game:
         self.player2_text = get_font("Arial", 30).render(player2, 1, WHITE)
         self.winner = None
         self.running = True
-
-    def initialise(self):
-        self.board.initialize()
+        self.mid_move = False
 
     """---------------- Draw methods ----------------------"""
     def draw(self):
@@ -36,7 +34,8 @@ class Game:
         self.board.draw_board()
 
         # Check if a pit is floated on to display the amount of beads in it
-        self.check_floating()
+        if not self.mid_move:
+            self.check_floating()
 
         pygame.display.flip()
 
@@ -89,6 +88,7 @@ class Game:
         playing_store = self.board.lower_store if self.turn else self.board.upper_store
         spread_length = pit.num_of_beads
         self.board.background_img = BOARD_IMG
+        self.mid_move = True
 
         while spread_length > 0:
 
