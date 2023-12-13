@@ -20,9 +20,12 @@ SCR_WIDTH, SCR_HEIGHT = 800, BOARD_IMG.get_height()
 BACKGROUND_IMG = pygame.image.load(os.path.join('assets', 'Carpets', 'CarpetBackground6.png'))
 BACKGROUND_IMG = pygame.transform.scale(BACKGROUND_IMG, (SCR_WIDTH, SCR_HEIGHT))
 
-# Player names
-PLAYER1_POS = (580, 745)
-PLAYER2_POS = (150, 20)
+# Player names and scores positions
+PLAYER1_POS = (550, 745)
+PLAYER2_POS = (120, 20)
+P1SCORE_POS = (650, 745)
+P2SCORE_POS = (220, 20)
+
 
 # Beads
 INITIAL_BEAD_NUM = 6
@@ -53,6 +56,7 @@ DOWN_STORE_BUFFER = 430
 
 # Fonts
 default_font = pygame.font.Font(None, 30)
+arial30 = pygame.font.SysFont("Arial", 30)
 
 def get_font(font_name, size):
     return pygame.font.SysFont(font_name, size)

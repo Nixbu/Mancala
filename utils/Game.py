@@ -12,18 +12,22 @@ def check_floating_in(pits, mouse_pos):
 
 class Game:
     def __init__(self, player1, player2):
+        # Set up game window
         self.screen = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
         pygame.display.set_caption("Mancala")
         self.clock = pygame.time.Clock()
+
+        # Set up game variables
         self.board = Board(self.screen)
         self.board.initialize()
         self.turn = random.choice([True, False])
         self.turn_pits = self.board.lower_pits if self.turn else self.board.upper_pits
         self.background_img = BACKGROUND_IMG
         self.board.background_img = PLAYER1_TURN_BOARD if self.turn else PLAYER2_TURN_BOARD
-        self.player1_text = get_font("Arial", 30).render(player1, 1, WHITE)
-        self.player2_text = get_font("Arial", 30).render(player2, 1, WHITE)
+        self.player1_text = arial30.render(player1 + ":", 1, WHITE)
+        self.player2_text = arial30.render(player2 + ":", 1, WHITE)
         self.winner = None
+
         self.running = True
         self.mid_move = False
 
@@ -40,9 +44,17 @@ class Game:
         pygame.display.flip()
 
     def draw_background(self):
+        # Draw background image
         self.screen.blit(self.background_img, (0, 0))
+
+        # Draw player names
         self.screen.blit(self.player1_text, PLAYER1_POS)
         self.screen.blit(self.player2_text, PLAYER2_POS)
+
+        # Draw player scores
+        self.screen.blit(arial30.render(str(self.board.lower_store.num_of_beads), 1, WHITE), P1SCORE_POS)
+        self.screen.blit(arial30.render(str(self.board.upper_store.num_of_beads), 1, WHITE), P2SCORE_POS)
+
 
     def check_floating(self):
         mouse_pos = pygame.mouse.get_pos()
