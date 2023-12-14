@@ -47,17 +47,17 @@ def main():
             # AI vs player game
             if ai_vs_player_option.is_clicked(mouse_pos):
                 ai_vs_player_game()
-                break
+                continue
 
             # Player vs Player game
             if pvp_option.is_clicked(mouse_pos):
                 one_vs_one()
-                break
+                continue
 
             # AI vs AI game
             if ai_vs_ai_button.is_clicked(mouse_pos):
                 ai_vs_ai_game()
-                break
+                continue
 
         draw_main_screen(main_window, main_title, ai_vs_player_option, pvp_option, ai_vs_ai_button)
 
@@ -108,8 +108,6 @@ def ai_vs_player_game():
 
         # limits FPS to 60
         game.clock.tick(60)
-
-    pygame.quit()
 
 
 def ai_vs_ai_game():
