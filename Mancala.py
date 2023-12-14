@@ -2,14 +2,19 @@ import pygame
 
 from utils import *
 
-def draw_main_screen(main_window, main_title, ai_option, one_vs_one_option):
+
+def draw_main_screen(main_window, main_title, ai_vs_player_option, pvp_option, ai_vs_ai_button):
     main_window.blit(BACKGROUND_IMG, (0, 0))
-    main_window.blit(BOARD_IMG, (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
+    main_window.blit(BOARD_IMG,
+                     (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
     main_window.blit(main_title, (SCR_WIDTH // 2 - main_title.get_width() // 2,
                                   SCR_HEIGHT // 2 - main_title.get_height() // 2))
-    ai_option.draw()
-    one_vs_one_option.draw()
+    ai_vs_player_option.draw()
+    pvp_option.draw()
+    ai_vs_ai_button.draw()
+
     pygame.display.flip()
+
 
 def main():
     # Main window setup
@@ -21,10 +26,9 @@ def main():
 
     # Main screen game variables
     running = True
-    ai_option = Button(main_window, "AI Player", 0, 300)
-    one_vs_one_option = Button(main_window, "One vs One", 0, 450)
-    ai_option.center()
-    one_vs_one_option.center()
+    ai_vs_player_option = Button(main_window, "AI vs Player", 50, 400, WHITE)
+    pvp_option = Button(main_window, "Player vs Player", 50, 450, WHITE)
+    ai_vs_ai_button = Button(main_window, "AI vs AI", 50, 500, WHITE)
 
     while running:
         keys = pygame.key.get_pressed()
@@ -40,24 +44,30 @@ def main():
 
         # Check if the mouse is clicked
         if pygame.mouse.get_pressed(3)[0]:
-            # AI player game
-            if ai_option.is_clicked(mouse_pos):
-                ai_game()
+            # AI vs player game
+            if ai_vs_player_option.is_clicked(mouse_pos):
+                ai_vs_player_game()
                 break
 
-            # 1 vs 1 Game
-            if one_vs_one_option.is_clicked(mouse_pos):
+            # Player vs Player game
+            if pvp_option.is_clicked(mouse_pos):
                 one_vs_one()
                 break
 
-        draw_main_screen(main_window, main_title, ai_option, one_vs_one_option)
+            # AI vs AI game
+            if ai_vs_ai_button.is_clicked(mouse_pos):
+                ai_vs_ai_game()
+                break
+
+        draw_main_screen(main_window, main_title, ai_vs_player_option, pvp_option, ai_vs_ai_button)
 
     pygame.quit()
 
-def ai_game():
+
+def ai_vs_player_game():
     # Game Variables
     game = Game("Player1", "AI Player")
-    computer = AIPlayer(game.board, 11)
+    computer = AIPlayer(game.board, 1, False)
 
     # Game Loop
     while game.running:
@@ -82,7 +92,6 @@ def ai_game():
                         # Spread the beads
                         # another_turn = check_another_turn(num, pit)
                         game.make_move(move)
-                        game.print_game_state()
 
         # AI turn
         else:
@@ -90,7 +99,6 @@ def ai_game():
             print(move)
 
             game.make_move(move)
-            game.print_game_state()
 
         # Check if there is a winner
         if game.winner is not None:
@@ -102,6 +110,49 @@ def ai_game():
         game.clock.tick(60)
 
     pygame.quit()
+
+
+def ai_vs_ai_game():
+    # Game Variables
+    # Set AI mode to True to skip waiting for moves
+    game = Game("AI Player 1", "AI Player 2", True)
+    ai_player1 = AIPlayer(game.board, 7, True)
+    ai_player2 = AIPlayer(game.board, 1, False)
+    print(game.turn)
+
+    # Game Loop
+    while game.running:
+
+        # Get keyboard state
+        keys = pygame.key.get_pressed()
+
+        game.draw()
+        game.mid_move = False
+
+        game.poll_events(keys)
+
+        # AI 1 turn
+        if game.turn:
+            move = str(ai_player1.choose_best_move())
+            print(move)
+
+            game.make_move(move)
+
+        # AI 2 turn
+        else:
+            move = str(ai_player2.choose_best_move())
+            print(move)
+
+            game.make_move(move)
+
+        # Check if there is a winner
+        if game.winner is not None:
+            print(f"The winner is... {game.winner}!")
+            pygame.time.wait(5000)
+            break
+
+        # limits FPS to 60
+        game.clock.tick(60)
 
 
 def one_vs_one():

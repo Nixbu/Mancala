@@ -21,10 +21,11 @@ BACKGROUND_IMG = pygame.image.load(os.path.join('assets', 'Carpets', 'CarpetBack
 BACKGROUND_IMG = pygame.transform.scale(BACKGROUND_IMG, (SCR_WIDTH, SCR_HEIGHT))
 
 # Player names and scores positions
-PLAYER1_POS = (550, 745)
+PLAYER1_POS = (550, 700)
+P1SCORE_POS = (600, 730)
+
 PLAYER2_POS = (120, 20)
-P1SCORE_POS = (650, 745)
-P2SCORE_POS = (220, 20)
+P2SCORE_POS = (150, 50)
 
 
 # Beads

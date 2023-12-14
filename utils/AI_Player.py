@@ -2,21 +2,22 @@ from .SimulatedBoard import *
 from math import inf
 
 class AIPlayer:
-    def __init__(self, board, depth):
+    def __init__(self, board, depth, turn):
         self.board = board
         self.depth = depth
+        self.turn = turn
 
     def choose_best_move(self):
         best_move = -1
         best_eval = -inf
-        sim_board = SimulatedBoard(self.board, False)
+        sim_board = SimulatedBoard(self.board, self.turn)
         sim_board.initialize()
 
         for move in range(6):
             if sim_board.current_pits[move] != 0:
                 new_sim_board = sim_board.create_copy()
                 new_sim_board.make_move(move)
-                evaluation = minimax(new_sim_board, self.depth, new_sim_board.turn, -inf, inf)
+                evaluation = minimax(new_sim_board, self.depth, new_sim_board.minimize, -inf, inf)
 
                 if evaluation > best_eval:
                     best_eval = evaluation
@@ -43,7 +44,7 @@ def minimax(sim_board, depth, minimizing_player, alpha, beta):
             if sim_board.current_pits[move] != 0:
                 new_sim_board = sim_board.create_copy()
                 new_sim_board.make_move(move)
-                evaluation = minimax(new_sim_board, depth - 1, new_sim_board.turn, alpha, beta)
+                evaluation = minimax(new_sim_board, depth - 1, new_sim_board.minimize, alpha, beta)
                 min_eval = min(min_eval, evaluation)
                 beta = min(beta, min_eval)
                 if beta <= alpha:
@@ -57,7 +58,7 @@ def minimax(sim_board, depth, minimizing_player, alpha, beta):
             if sim_board.current_pits[move] != 0:
                 new_sim_board = sim_board.create_copy()
                 new_sim_board.make_move(move)
-                evaluation = minimax(new_sim_board, depth - 1, new_sim_board.turn, alpha, beta)
+                evaluation = minimax(new_sim_board, depth - 1, new_sim_board.minimize, alpha, beta)
                 max_eval = max(max_eval, evaluation)
                 alpha = max(max_eval, alpha)
                 if beta <= alpha:

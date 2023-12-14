@@ -11,7 +11,7 @@ def check_floating_in(pits, mouse_pos):
 
 
 class Game:
-    def __init__(self, player1, player2):
+    def __init__(self, player1, player2, ai_mode=False):
         # Set up game window
         self.screen = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
         pygame.display.set_caption("Mancala")
@@ -30,6 +30,7 @@ class Game:
 
         self.running = True
         self.mid_move = False
+        self.ai_mode = ai_mode
 
     """---------------- Draw methods ----------------------"""
     def draw(self):
@@ -54,7 +55,6 @@ class Game:
         # Draw player scores
         self.screen.blit(arial30.render(str(self.board.lower_store.num_of_beads), 1, WHITE), P1SCORE_POS)
         self.screen.blit(arial30.render(str(self.board.upper_store.num_of_beads), 1, WHITE), P2SCORE_POS)
-
 
     def check_floating(self):
         mouse_pos = pygame.mouse.get_pos()
@@ -132,13 +132,10 @@ class Game:
             # Update window
             self.draw()
             pygame.display.flip()
-            pygame.time.wait(500)
+            if not self.ai_mode:
+                pygame.time.wait(500)
 
             spread_length -= 1
-
-    def print_game_state(self):
-        print(f"Player 1 num of beads: {self.board.lower_store.num_of_beads}")
-        print(f"Player 2 num of beads: {self.board.upper_store.num_of_beads}")
 
     def check_another_turn(self, move):
         pit = self.turn_pits.get(move)
