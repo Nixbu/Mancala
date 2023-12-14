@@ -114,7 +114,7 @@ def ai_vs_ai_game():
     # Game Variables
     # Set AI mode to True to skip waiting for moves
     game = Game("AI Player 1", "AI Player 2", True)
-    ai_player1 = AIPlayer(game.board, 7, True)
+    ai_player1 = AIPlayer(game.board, 1, True)
     ai_player2 = AIPlayer(game.board, 1, False)
     print(game.turn)
 
@@ -145,7 +145,11 @@ def ai_vs_ai_game():
 
         # Check if there is a winner
         if game.winner is not None:
-            print(f"The winner is... {game.winner}!")
+            winner_text = arial30.render(game.winner + " won!", 1, BLACK)
+            game.screen.blit(winner_text, (SCR_WIDTH // 2 - winner_text.get_width() // 2,
+                                           SCR_HEIGHT // 2 - winner_text.get_height() // 2))
+            pygame.display.flip()
+
             pygame.time.wait(5000)
             break
 
@@ -179,7 +183,7 @@ def one_vs_one():
 
         # Check if there is a winner
         if game.winner is not None:
-            print(f"The winner is... {game.winner}!")
+            game.screen.blit(arial30.render(game.winner + " won!", 1, BLACK), (SCR_WIDTH // 2, SCR_HEIGHT // 2))
             pygame.time.wait(5000)
             break
 
