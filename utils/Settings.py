@@ -32,12 +32,24 @@ P2SCORE_POS = (150, 50)
 INITIAL_BEAD_NUM = 6
 BEAD_RADIUS = 7
 BEAD_DIAMETER = 2 * BEAD_RADIUS
-RED_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join('assets', 'Game Assets', 'RED_BEAD.png')), 0.25)
-LIGHT_BLUE_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join('assets', 'Game Assets',  'LIGHT_BLUE_BEAD.png')), 0.25)
-BLUE_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join('assets', 'Game Assets',  'BLUE_BEAD.png')), 0.25)
-YELLOW_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join('assets', 'Game Assets',  'YELLOW_BEAD.png')), 0.25)
-GREEN_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join('assets', 'Game Assets',  'GREEN_BEAD.png')), 0.25)
-BEAD_IMAGE_LIST = [RED_BEAD_IMG, GREEN_BEAD_IMG, BLUE_BEAD_IMG, LIGHT_BLUE_BEAD_IMG, YELLOW_BEAD_IMG]
+
+# First set
+FIRST_SET_PATH = os.path.join('assets', 'Game Assets', 'Beads_set1')
+RED_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join(FIRST_SET_PATH, 'RED_BEAD.png')), 0.25)
+LIGHT_BLUE_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join(FIRST_SET_PATH,  'LIGHT_BLUE_BEAD.png')), 0.25)
+BLUE_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join(FIRST_SET_PATH,  'BLUE_BEAD.png')), 0.25)
+YELLOW_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join(FIRST_SET_PATH,  'YELLOW_BEAD.png')), 0.25)
+GREEN_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join(FIRST_SET_PATH,  'GREEN_BEAD.png')), 0.25)
+BEAD_IMAGE_LIST1 = [RED_BEAD_IMG, GREEN_BEAD_IMG, BLUE_BEAD_IMG, LIGHT_BLUE_BEAD_IMG, YELLOW_BEAD_IMG]
+
+# Second set
+SECOND_SET_PATH = os.path.join('assets', 'Game Assets', 'Beads_set2')
+BEAD_SIZE = (20, 20)
+BEAD1_IMG = pygame.transform.scale(pygame.image.load(os.path.join(SECOND_SET_PATH, 'BEAD1.png')), BEAD_SIZE)
+BEAD1_IMG.set_alpha(175)
+BEAD2_IMG = pygame.transform.scale(pygame.image.load(os.path.join(SECOND_SET_PATH, 'BEAD2.png')), BEAD_SIZE)
+BEAD_IMAGE_LIST2 = [BEAD1_IMG, BEAD2_IMG]
+
 
 
 # Pits

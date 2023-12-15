@@ -15,7 +15,7 @@ class CirclePit(Pit):
         self.remove_beads()
 
         for _ in range(INITIAL_BEAD_NUM):
-            bead_image = random.choice(BEAD_IMAGE_LIST)
+            bead_image = random.choice(BEAD_IMAGE_LIST2)
             self.beads.append(
                 Bead(self.screen, bead_image,
                      self.next_bead_pos[0],
