@@ -190,7 +190,6 @@ def one_vs_one():
         # limits FPS to 60
         game.clock.tick(60)
 
-    pygame.quit()
 
 
 if __name__ == '__main__':

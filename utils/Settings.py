@@ -33,6 +33,12 @@ INITIAL_BEAD_NUM = 6
 BEAD_RADIUS = 7
 BEAD_DIAMETER = 2 * BEAD_RADIUS
 
+
+def set_bead(path, file):
+    bead_img = pygame.transform.scale(pygame.image.load(os.path.join(path, file)), BEAD_SIZE)
+    bead_img.set_alpha(175)
+
+    return bead_img
 # First set
 FIRST_SET_PATH = os.path.join('assets', 'Game Assets', 'Beads_set1')
 RED_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join(FIRST_SET_PATH, 'RED_BEAD.png')), 0.25)
@@ -45,10 +51,11 @@ BEAD_IMAGE_LIST1 = [RED_BEAD_IMG, GREEN_BEAD_IMG, BLUE_BEAD_IMG, LIGHT_BLUE_BEAD
 # Second set
 SECOND_SET_PATH = os.path.join('assets', 'Game Assets', 'Beads_set2')
 BEAD_SIZE = (20, 20)
-BEAD1_IMG = pygame.transform.scale(pygame.image.load(os.path.join(SECOND_SET_PATH, 'BEAD1.png')), BEAD_SIZE)
-BEAD1_IMG.set_alpha(175)
-BEAD2_IMG = pygame.transform.scale(pygame.image.load(os.path.join(SECOND_SET_PATH, 'BEAD2.png')), BEAD_SIZE)
-BEAD_IMAGE_LIST2 = [BEAD1_IMG, BEAD2_IMG]
+BEAD1_IMG = set_bead(SECOND_SET_PATH, 'BEAD1.png')
+BEAD2_IMG = set_bead(SECOND_SET_PATH, 'BEAD2.png')
+BEAD3_IMG = set_bead(SECOND_SET_PATH, 'BEAD3.png')
+BEAD_IMAGE_LIST2 = [BEAD1_IMG, BEAD2_IMG, BEAD3_IMG]
+
 
 
 
