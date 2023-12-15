@@ -1,6 +1,7 @@
 import pygame
 
 from utils import *
+from classes import *
 
 
 def draw_main_screen(main_window, main_title, ai_vs_player_option, pvp_option, ai_vs_ai_button):

@@ -1,7 +1,6 @@
-import pygame.display
-
-from .CirclePit import *
-from .Store import *
+from classes.CirclePit import *
+from classes.Store import *
+from utils.Settings import *
 
 
 class Board:

@@ -1,7 +1,5 @@
-import pygame
-
-from .Settings import *
-from .Board import *
+from utils.Settings import *
+from classes.Board import *
 
 
 def check_floating_in(pits, mouse_pos):

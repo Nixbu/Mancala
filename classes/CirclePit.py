@@ -1,7 +1,7 @@
 import random
 
-from .Pit import *
-
+from classes.Pit import *
+from .Bead import *
 
 class CirclePit(Pit):
     def __init__(self, screen, center):

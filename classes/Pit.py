@@ -1,7 +1,3 @@
-from .Bead import *
-from .Settings import *
-import pygame
-
 """
 Class representing a pit in the board.
     @ screen : The screen to draw the Pit on

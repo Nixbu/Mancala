@@ -1,6 +1,6 @@
 import pygame.draw
 
-from .Settings import *
+from utils.Settings import *
 
 
 class Bead:

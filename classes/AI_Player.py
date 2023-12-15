@@ -1,4 +1,4 @@
-from .SimulatedBoard import *
+from classes.SimulatedBoard import *
 from math import inf
 
 class AIPlayer:

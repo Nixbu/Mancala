@@ -1,4 +1,5 @@
-from .Pit import *
+from classes.Pit import *
+from utils.Settings import *
 
 
 class Store(Pit):
