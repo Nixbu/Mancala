@@ -20,7 +20,7 @@ class SimulatedBoard:
         self.side = self.turn
         self.my_store = self.board.lower_store.num_of_beads if self.turn else self.board.upper_store.num_of_beads
         self.rival_store = self.board.lower_store.num_of_beads if not self.turn else self.board.upper_store.num_of_beads
-        self.current_pits = self.lower_pits_state if self.side else self.upper_pits_state
+        self.current_pits = self.lower_pits_state if self.turn else self.upper_pits_state
         self.turn_count = 0
         self.minimize = False
 
@@ -31,13 +31,15 @@ class SimulatedBoard:
         board_copy.side = self.side
         board_copy.my_store = self.my_store
         board_copy.rival_store = self.rival_store
-        board_copy.current_pits = board_copy.lower_pits_state if board_copy.side else board_copy.upper_pits_state
+        board_copy.current_pits = board_copy.lower_pits_state if board_copy.turn else board_copy.upper_pits_state
         board_copy.turn_count = self.turn_count
         board_copy.minimize = self.minimize
 
         return board_copy
 
     def make_move(self, pit_number):
+        self.current_pits = self.lower_pits_state if self.turn else self.upper_pits_state
+        self.side = self.turn
         beads = self.current_pits[pit_number]
         self.current_pits[pit_number] = 0
 
@@ -67,6 +69,8 @@ class SimulatedBoard:
         else:
             self.turn = not self.turn
             self.minimize = not self.minimize
+
+        self.side = self.turn
 
     def is_over(self):
         return (all(bead_num == 0 for bead_num in self.lower_pits_state)

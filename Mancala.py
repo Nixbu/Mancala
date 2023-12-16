@@ -68,7 +68,7 @@ def main():
 def ai_vs_player_game():
     # Game Variables
     game = Game("Player1", "AI Player")
-    computer = AIPlayer(game.board, 1, False)
+    computer = AIPlayer(game.board, 6, False)
 
     # Game Loop
     while game.running:
@@ -115,8 +115,8 @@ def ai_vs_ai_game():
     # Game Variables
     # Set AI mode to True to skip waiting for moves
     game = Game("AI Player 1", "AI Player 2", True)
-    ai_player1 = AIPlayer(game.board, 1, True)
-    ai_player2 = AIPlayer(game.board, 1, False)
+    ai_player1 = AIPlayer(game.board, 11, True)
+    ai_player2 = AIPlayer(game.board, 11, False)
     print(game.turn)
 
     # Game Loop
