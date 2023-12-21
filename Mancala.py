@@ -4,7 +4,7 @@ from utils import *
 from classes import *
 
 
-def draw_main_screen(main_window, main_title, ai_vs_player_option, pvp_option, ai_vs_ai_button):
+def draw_main_screen(main_window, main_title, ai_vs_player_option, pvp_option, ai_vs_ai_button, options_button):
     main_window.blit(BACKGROUND_IMG, (0, 0))
     main_window.blit(BOARD_IMG,
                      (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
@@ -13,6 +13,7 @@ def draw_main_screen(main_window, main_title, ai_vs_player_option, pvp_option, a
     ai_vs_player_option.draw()
     pvp_option.draw()
     ai_vs_ai_button.draw()
+    options_button.draw()
 
     pygame.display.flip()
 
@@ -27,9 +28,10 @@ def main():
 
     # Main screen game variables
     running = True
-    ai_vs_player_option = Button(main_window, "AI vs Player", 50, 400, WHITE)
-    pvp_option = Button(main_window, "Player vs Player", 50, 450, WHITE)
+    ai_vs_player_button = Button(main_window, "AI vs Player", 50, 400, WHITE)
+    pvp_button = Button(main_window, "Player vs Player", 50, 450, WHITE)
     ai_vs_ai_button = Button(main_window, "AI vs AI", 50, 500, WHITE)
+    options_button = Button(main_window, "Options", 50, 550, WHITE)
 
     while running:
         keys = pygame.key.get_pressed()
@@ -46,12 +48,12 @@ def main():
         # Check if the mouse is clicked
         if pygame.mouse.get_pressed(3)[0]:
             # AI vs player game
-            if ai_vs_player_option.is_clicked(mouse_pos):
+            if ai_vs_player_button.is_clicked(mouse_pos):
                 ai_vs_player_game()
                 continue
 
             # Player vs Player game
-            if pvp_option.is_clicked(mouse_pos):
+            if pvp_button.is_clicked(mouse_pos):
                 one_vs_one()
                 continue
 
@@ -60,9 +62,64 @@ def main():
                 ai_vs_ai_game()
                 continue
 
-        draw_main_screen(main_window, main_title, ai_vs_player_option, pvp_option, ai_vs_ai_button)
+            if options_button.is_clicked(mouse_pos):
+                options()
+                pygame.time.wait(500)
+                continue
+
+        draw_main_screen(main_window, main_title, ai_vs_player_button, pvp_button, ai_vs_ai_button, options_button)
 
     pygame.quit()
+
+
+def draw_options_window(options_window, options_title, beadset1_button, beadset2_button):
+    options_window.blit(BACKGROUND_IMG, (0, 0))
+    options_window.blit(BOARD_IMG,
+                        (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
+    options_window.blit(options_title, (SCR_WIDTH // 2 - options_title.get_width() // 2,
+                                        SCR_HEIGHT // 2 - options_title.get_height() // 2))
+    beadset1_button.draw()
+    beadset2_button.draw()
+
+    pygame.display.flip()
+
+
+def options():
+    options_window = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
+    pygame.display.set_caption("Mancala")
+
+    options_title = get_font("Times new roman", 40).render("Bead Options", 1, BLACK)
+
+    beadset1_button = Button(options_window, "Bead set #1", 50, 400, WHITE)
+    beadset2_button = Button(options_window, "Bead set #2", 50, 450, WHITE)
+
+    running = True
+
+    while running:
+        keys = pygame.key.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                running = False
+
+            if keys[pygame.K_ESCAPE]:
+                running = False
+
+        # Check if the mouse is clicked
+        if pygame.mouse.get_pressed(3)[0]:
+            # AI vs player game
+            if beadset1_button.is_clicked(mouse_pos):
+                set_bead_list(1)
+                break
+
+            # Player vs Player game
+            if beadset2_button.is_clicked(mouse_pos):
+                set_bead_list(2)
+                break
+
+        draw_options_window(options_window, options_title, beadset1_button, beadset2_button)
 
 
 def ai_vs_player_game():
@@ -115,8 +172,8 @@ def ai_vs_ai_game():
     # Game Variables
     # Set AI mode to True to skip waiting for moves
     game = Game("AI Player 1", "AI Player 2", True)
-    ai_player1 = AIPlayer(game.board, 11, True)
-    ai_player2 = AIPlayer(game.board, 11, False)
+    ai_player1 = AIPlayer(game.board, 12, True)
+    ai_player2 = AIPlayer(game.board, 12, False)
     print(game.turn)
 
     # Game Loop
@@ -190,7 +247,6 @@ def one_vs_one():
 
         # limits FPS to 60
         game.clock.tick(60)
-
 
 
 if __name__ == '__main__':

@@ -39,6 +39,9 @@ def set_bead(path, file):
     bead_img.set_alpha(175)
 
     return bead_img
+
+
+
 # First set
 FIRST_SET_PATH = os.path.join('assets', 'Game Assets', 'Beads_set1')
 RED_BEAD_IMG = pygame.transform.scale_by(pygame.image.load(os.path.join(FIRST_SET_PATH, 'RED_BEAD.png')), 0.25)
@@ -56,6 +59,13 @@ BEAD2_IMG = set_bead(SECOND_SET_PATH, 'BEAD2.png')
 BEAD3_IMG = set_bead(SECOND_SET_PATH, 'BEAD3.png')
 BEAD_IMAGE_LIST2 = [BEAD1_IMG, BEAD2_IMG, BEAD3_IMG]
 
+# Bead set
+BEAD_SETS = [BEAD_IMAGE_LIST1, BEAD_IMAGE_LIST2]
+bead_set = BEAD_SETS[1]
+
+def set_bead_list(set_num):
+    global bead_set
+    bead_set = BEAD_SETS[set_num - 1]
 
 # Pits
 PIT_RADIUS = 40

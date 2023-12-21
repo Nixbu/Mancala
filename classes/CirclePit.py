@@ -13,9 +13,9 @@ class CirclePit(Pit):
 
     def initialize(self):
         self.remove_beads()
-
+        from utils.Settings import bead_set
         for _ in range(INITIAL_BEAD_NUM):
-            bead_image = random.choice(BEAD_IMAGE_LIST2)
+            bead_image = random.choice(bead_set)
             self.beads.append(
                 Bead(self.screen, bead_image,
                      self.next_bead_pos[0],
@@ -43,4 +43,5 @@ class CirclePit(Pit):
         amount = default_font.render(str(self.num_of_beads), 1, BLACK)
         self.screen.blit(amount, self.center)
         pygame.display.flip()
+
 
