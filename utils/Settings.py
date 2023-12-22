@@ -36,11 +36,9 @@ BEAD_DIAMETER = 2 * BEAD_RADIUS
 
 def set_bead(path, file):
     bead_img = pygame.transform.scale(pygame.image.load(os.path.join(path, file)), BEAD_SIZE)
-    bead_img.set_alpha(175)
+    bead_img.set_alpha(200)
 
     return bead_img
-
-
 
 # First set
 FIRST_SET_PATH = os.path.join('assets', 'Game Assets', 'Beads_set1')
@@ -74,6 +72,9 @@ LOW_PIT_BUFFER = 760
 PIT_BUFFER = 185
 UP_PIT_DIC = {"1": (335, 235), "2": (335, 145), "3": (335, 60), "4": (445, 60), "5": (445, 145), "6": (445, 235)}
 LOW_PIT_DIC = {"1": (445, 560), "2": (445, 645), "3": (445, 730), "4": (335, 730), "5": (335, 645), "6": (335, 560)}
+CUP_IMG = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'Game Assets', 'Cup.png')), (100, 100))
+CUP_POS = (600, 400)
+CUP_IMG_POS = (550, 350)
 
 # Stores
 STORE_WIDTH = 200

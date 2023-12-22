@@ -1,3 +1,5 @@
+import pygame.draw
+
 from utils.Settings import *
 from classes.Board import *
 
@@ -18,10 +20,12 @@ class Game:
         # Set up game variables
         self.board = Board(self.screen)
         self.board.initialize()
+        self.cup = CirclePit(self.screen, CUP_POS)
         self.turn = random.choice([True, False])
         self.turn_pits = self.board.lower_pits if self.turn else self.board.upper_pits
         self.background_img = BACKGROUND_IMG
         self.board.background_img = PLAYER1_TURN_BOARD if self.turn else PLAYER2_TURN_BOARD
+        self.cup_img = CUP_IMG
         self.player1_text = arial30.render(player1 + ":", 1, WHITE)
         self.player2_text = arial30.render(player2 + ":", 1, WHITE)
         self.winner = None
@@ -35,6 +39,7 @@ class Game:
         # Draw the background, board and beads
         self.draw_background()
         self.board.draw_board()
+        self.cup.draw()
 
         # Check if a pit is floated on to display the amount of beads in it
         if not self.mid_move:
@@ -43,8 +48,9 @@ class Game:
         pygame.display.flip()
 
     def draw_background(self):
-        # Draw background image
+        # Draw background image and cup
         self.screen.blit(self.background_img, (0, 0))
+        self.screen.blit(self.cup_img, CUP_IMG_POS)
 
         # Draw player names
         self.screen.blit(self.player1_text, PLAYER1_POS)
@@ -91,21 +97,46 @@ class Game:
         else:
             return "Draw"
 
+    def move_beads_to_cup(self, pit):
+        while pit.num_of_beads != 0:
+            # Remove a bead and add it to the cup
+            bead = pit.beads.pop()
+            bead.update_pos(self.cup.next_bead_pos)
+            self.cup.beads.append(bead)
+
+            # Update cup's number of beads and bext bead position
+            self.cup.num_of_beads += 1
+            self.cup.update_next_bead_pos()
+
+            # Update pit's number of beads and bext bead position
+            pit.num_of_beads -= 1
+            pit.update_next_bead_pos()
+
+        # Draw the beads in the cup
+        self.draw()
+        pygame.display.flip()
+        pygame.time.wait(200)
+
     def spread_beads(self, move):
+        # Get the wanted pit and move the beads from it to the cup
         pit = self.turn_pits.get(move)
+        self.move_beads_to_cup(pit)
+
+        # Get board side
         curr_pit_num = int(move) - 1
         board_side = self.board.lower_pits if self.turn else self.board.upper_pits
         playing_store = self.board.lower_store if self.turn else self.board.upper_store
-        spread_length = pit.num_of_beads
+        spread_length = self.cup.num_of_beads
         self.board.background_img = BOARD_IMG
         self.mid_move = True
 
+        # Spread the beads
         while spread_length > 0:
 
             # Get one bead
-            curr_bead = pit.beads.pop()
-            pit.num_of_beads -= 1
-            pit.update_next_bead_pos()
+            curr_bead = self.cup.beads.pop()
+            self.cup.num_of_beads -= 1
+            self.cup.update_next_bead_pos()
 
             if curr_pit_num == 0:
                 # Add to player's store
