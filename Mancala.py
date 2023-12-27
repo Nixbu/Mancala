@@ -167,7 +167,7 @@ def ai_vs_player_game():
         # limits FPS to 60
         game.clock.tick(60)
 
-
+""" Function for AI vs AI games """
 def ai_vs_ai_game():
     # Game Variables
     # Set AI mode to True to skip waiting for moves

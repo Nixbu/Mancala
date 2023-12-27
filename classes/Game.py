@@ -115,7 +115,7 @@ class Game:
         # Draw the beads in the cup
         self.draw()
         pygame.display.flip()
-        pygame.time.wait(200)
+        pygame.time.wait(300)
 
     def spread_beads(self, move):
         # Get the wanted pit and move the beads from it to the cup
