@@ -91,7 +91,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Project Images
 ### Main Screen
-![https://github.com/Nixbu/Mancala/blob/master/Images/main_screen.PNG?raw=true](/images/main_screen.png)
+![alt text](https://raw.githubusercontent.com/Nixbu/Mancala/master/Images/main_screen.PNG)
 
 ### AI vs Player Game
 ![https://github.com/Nixbu/Mancala/blob/master/Images/aivsp2.PNG?raw=true](/images/aivsp2.png)
