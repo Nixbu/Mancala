@@ -3,8 +3,17 @@ import pygame
 from utils import *
 from classes import *
 
-
 def draw_main_screen(main_window, main_title, ai_vs_player_option, pvp_option, ai_vs_ai_button, options_button):
+    """
+    The function draws the main screen
+    :param main_window: Main window object
+    :param main_title: The title of the window
+    :param ai_vs_player_option: Button for ai vs player
+    :param pvp_option:  Button for player vs player
+    :param ai_vs_ai_button: Button for ai vs ai
+    :param options_button: Button for options
+    :return: None
+    """
     main_window.blit(BACKGROUND_IMG, (0, 0))
     main_window.blit(BOARD_IMG,
                      (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
@@ -71,8 +80,15 @@ def main():
 
     pygame.quit()
 
-
 def draw_options_window(options_window, options_title, beadset1_button, beadset2_button):
+    """
+    Function for drawing the options window
+    :param options_window: The options window
+    :param options_title: The title of the window
+    :param beadset1_button: Button for beadset 1
+    :param beadset2_button: Button for beadset 2
+    :return: None
+    """
     options_window.blit(BACKGROUND_IMG, (0, 0))
     options_window.blit(BOARD_IMG,
                         (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2, SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
@@ -83,8 +99,11 @@ def draw_options_window(options_window, options_title, beadset1_button, beadset2
 
     pygame.display.flip()
 
-
 def options():
+    """
+    Options window to choose a wanted beadset
+    :return: None
+    """
     options_window = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
     pygame.display.set_caption("Mancala")
 
@@ -121,8 +140,11 @@ def options():
 
         draw_options_window(options_window, options_title, beadset1_button, beadset2_button)
 
-
 def ai_vs_player_game():
+    """
+    Function for AI vs Player game
+    :return: None
+    """
     # Game Variables
     game = Game("Player1", "AI Player")
     computer = AIPlayer(game.board, 6, False)
@@ -167,8 +189,11 @@ def ai_vs_player_game():
         # limits FPS to 60
         game.clock.tick(60)
 
-""" Function for AI vs AI games """
 def ai_vs_ai_game():
+    """
+    Function for AI vs AI game
+    :return: None
+    """
     # Game Variables
     # Set AI mode to True to skip waiting for moves
     game = Game("AI Player 1", "AI Player 2", True)
@@ -214,8 +239,11 @@ def ai_vs_ai_game():
         # limits FPS to 60
         game.clock.tick(60)
 
-
 def one_vs_one():
+    """
+    Function for Player vs Player game
+    :return: None
+    """
     # screen Setup
     game = Game("Player1", "Player2")
 
