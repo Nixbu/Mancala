@@ -88,3 +88,13 @@ Feel free to contribute to the improvement of this Mancala game. You can open an
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Project Images
+### Main Screen
+![https://github.com/Nixbu/Mancala/blob/master/Images/main_screen.PNG?raw=true](/images/main_screen.png)
+
+### AI vs Player Game
+![https://github.com/Nixbu/Mancala/blob/master/Images/main_screen.PNG?raw=true](/images/main_screen.png)
+
+### AI vs AI Game
+![https://github.com/Nixbu/Mancala/blob/master/Images/aivsai.PNG?raw=true](/images/aivsai.png)
