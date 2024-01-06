@@ -2,6 +2,11 @@ from classes.SimulatedBoard import *
 from math import inf
 
 class AIPlayer:
+    """
+    A class representing an AI Mancala player.
+    Implemented decision algorithm based on
+    the Minimax algorithm with alpha-beta pruning.
+    """
     def __init__(self, board, depth, turn):
         self.board = board
         self.depth = depth
@@ -28,8 +33,8 @@ class AIPlayer:
 def minimax(sim_board, depth, minimizing_player, alpha, beta):
     """
     Minimax algorithm to determine the best move in a mancala game
-    :param beta: The best (minimum) evaluation in the path
-    :param alpha: The best (maximum) evaluation in the path
+    :param beta: The best (minimal) evaluation in the path
+    :param alpha: The best (maximal) evaluation in the path
     :param minimizing_player: To know if it needs to maximize or minimize evaluation
     :param sim_board: SimulatedBoard object, to simplify the board state
     :param depth: How many moves into the future to check

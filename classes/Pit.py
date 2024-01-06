@@ -1,11 +1,12 @@
-"""
-Class representing a pit in the board.
-    @ screen : The screen to draw the Pit on
-    @ beads : A list of the current beads
-    @ num_of_beads : Current number of beads
-"""
 class Pit:
+    """
+    Class representing a pit in the game
+    """
     def __init__(self, screen):
+        """
+        Init
+        :param screen: Screen to draw pit on
+        """
         self.screen = screen
         self.beads = []
         self.num_of_beads = 0

@@ -2,7 +2,16 @@ import math
 
 
 class SimulatedBoard:
+    """
+    Class representing a simulated board
+    Used to reduce memory in Minimax algorithm tree
+    """
     def __init__(self, board, turn):
+        """
+        Init
+        :param board: The board to create a simulated board from
+        :param turn: The current turn
+        """
         self.board = board
         self.turn = turn
         self.lower_pits_state = None
@@ -15,6 +24,10 @@ class SimulatedBoard:
         self.minimize = None
 
     def initialize(self):
+        """
+        The method initializes the simulated board based on the current board state
+        :return: None
+        """
         self.lower_pits_state = [pit.num_of_beads for pit in self.board.lower_pits.values()]
         self.upper_pits_state = [pit.num_of_beads for pit in self.board.upper_pits.values()]
         self.side = self.turn
@@ -25,6 +38,10 @@ class SimulatedBoard:
         self.minimize = False
 
     def create_copy(self):
+        """
+        The method returns a copy of the simulated board
+        :return: SimulatedBoard
+        """
         board_copy = SimulatedBoard(self.board, self.turn)
         board_copy.lower_pits_state = self.lower_pits_state.copy()
         board_copy.upper_pits_state = self.upper_pits_state.copy()
@@ -38,6 +55,11 @@ class SimulatedBoard:
         return board_copy
 
     def make_move(self, pit_number):
+        """
+        Method for making a move in the simulated board
+        :param pit_number: The wanted move to make
+        :return: None
+        """
         self.current_pits = self.lower_pits_state if self.turn else self.upper_pits_state
         self.side = self.turn
         beads = self.current_pits[pit_number]
@@ -73,10 +95,18 @@ class SimulatedBoard:
         self.side = self.turn
 
     def is_over(self):
+        """
+        Method to check if the game is over in the simulated board
+        :return: True - game over, else - False
+        """
         return (all(bead_num == 0 for bead_num in self.lower_pits_state)
                 or all(bead_num == 0 for bead_num in self.upper_pits_state))
 
     def evaluate(self):
+        """
+        Method to evaluate the current board state for the Minimax algorithm
+        :return: Inf if winning, else - difference in points
+        """
         if self.is_over() and self.my_store > self.rival_store:
             return math.inf
         else:

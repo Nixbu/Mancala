@@ -4,7 +4,14 @@ from utils.Settings import *
 
 
 class Board:
+    """
+    Class representing the Mancala board
+    """
     def __init__(self, screen):
+        """
+        Init
+        :param screen: The screen to draw the board on
+        """
         self.screen = screen
         self.upper_store = Store(screen, UP_STORE_BUFFER)
         self.lower_store = Store(screen, DOWN_STORE_BUFFER)
@@ -13,6 +20,10 @@ class Board:
         self.background_img = BOARD_IMG
 
     def initialize(self):
+        """
+        The method initializes the pits on the board
+        :return: None
+        """
         self.upper_store.remove_beads()
         self.lower_store.remove_beads()
 
@@ -23,6 +34,10 @@ class Board:
             pit.initialize()
 
     def draw_board(self):
+        """
+        The method draws the board on the screen
+        :return: None
+        """
         self.screen.blit(self.background_img, (SCR_WIDTH // 2 - BOARD_IMG.get_width() // 2,
                                                SCR_HEIGHT // 2 - BOARD_IMG.get_height() // 2))
 

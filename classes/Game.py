@@ -5,13 +5,28 @@ from classes.Board import *
 
 
 def check_floating_in(pits, mouse_pos):
+    """
+    The function checks if the mouse floats in one of the pits.
+    :param pits: The given pits
+    :param mouse_pos: The current mouse position
+    :return: None
+    """
     for pit in pits:
         if pit.collided(mouse_pos):
             pit.draw_amount()
 
 
 class Game:
+    """
+    Class representing a Game of Mancala
+    """
     def __init__(self, player1, player2, ai_mode=False):
+        """
+        Init
+        :param player1: The first player's name
+        :param player2: The second player's name
+        :param ai_mode: If True - skips time dilation
+        """
         # Set up game window
         self.screen = pygame.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
         pygame.display.set_caption("Mancala")
@@ -36,6 +51,10 @@ class Game:
 
     """---------------- Draw methods ----------------------"""
     def draw(self):
+        """
+        The method draws the entire game
+        :return: None
+        """
         # Draw the background, board and beads
         self.draw_background()
         self.board.draw_board()
@@ -48,6 +67,10 @@ class Game:
         pygame.display.flip()
 
     def draw_background(self):
+        """
+        The method draws the background of the game
+        :return: None
+        """
         # Draw background image and cup
         self.screen.blit(self.background_img, (0, 0))
         self.screen.blit(self.cup_img, CUP_IMG_POS)
@@ -61,12 +84,22 @@ class Game:
         self.screen.blit(arial30.render(str(self.board.upper_store.num_of_beads), 1, WHITE), P2SCORE_POS)
 
     def check_floating(self):
+        """
+        The method checks if the mouse is floating in one of the pits
+        :return: None
+        """
         mouse_pos = pygame.mouse.get_pos()
         check_floating_in(self.board.lower_pits.values(), mouse_pos)
         check_floating_in(self.board.upper_pits.values(), mouse_pos)
 
     """---------------- Game methods ----------------------"""
     def make_move(self, move):
+        """
+        The method makes the wanted move on the board
+        :param move: The wanted move - number of the pits to
+         move beads from
+        :return: None
+        """
         another_turn = self.check_another_turn(move)
         self.spread_beads(move)
 
@@ -83,6 +116,10 @@ class Game:
         self.board.background_img = PLAYER1_TURN_BOARD if self.turn else PLAYER2_TURN_BOARD
 
     def check_empty(self):
+        """
+        The method checks if current player's side is empty.
+        :return: Empty - True, else - False
+        """
         for pit in self.turn_pits.values():
             if pit.num_of_beads > 0:
                 return False
@@ -90,6 +127,10 @@ class Game:
         return True
 
     def find_winner(self):
+        """
+        The method returns who the winner is.
+        :return: String
+        """
         if self.board.lower_store.num_of_beads > self.board.upper_store.num_of_beads:
             return "Player 1"
         elif self.board.lower_store.num_of_beads < self.board.upper_store.num_of_beads:
@@ -98,6 +139,11 @@ class Game:
             return "Draw"
 
     def move_beads_to_cup(self, pit):
+        """
+        The method moves the beads to the cup
+        :param pit: The pit to take the beads from
+        :return: None
+        """
         while pit.num_of_beads != 0:
             # Remove a bead and add it to the cup
             bead = pit.beads.pop()
@@ -118,6 +164,11 @@ class Game:
         pygame.time.wait(300)
 
     def spread_beads(self, move):
+        """
+        The method spreads the beads from the cup to the next pits
+        :param move: The number of the original pit
+        :return: None
+        """
         # Get the wanted pit and move the beads from it to the cup
         pit = self.turn_pits.get(move)
         self.move_beads_to_cup(pit)
@@ -167,10 +218,20 @@ class Game:
             spread_length -= 1
 
     def check_another_turn(self, move):
+        """
+        The method checks if the player gets another turn
+        :param move: The chosen move
+        :return: True - if the player gets another turn, else - False
+        """
         pit = self.turn_pits.get(move)
         return (pit.num_of_beads - int(move)) % 7 == 0
 
     def poll_events(self, keys):
+        """
+        The function polls for events in the game
+        :param keys: The current state of the keyborad keys
+        :return: None
+        """
         # Poll for events
         for event in pygame.event.get():
 
