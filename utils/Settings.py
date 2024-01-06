@@ -36,6 +36,12 @@ BEAD_POS_DIC = {"2": (BEAD_DIAMETER, BEAD_DIAMETER)}
 
 
 def set_bead(path, file):
+    """
+    Function to set a bead image to the wanted size
+    :param path: The directory path of the bead image
+    :param file:  The name of the bead image
+    :return: pygame.Image
+    """
     bead_img = pygame.transform.scale(pygame.image.load(os.path.join(path, file)), BEAD_SIZE)
     bead_img.set_alpha(200)
 
