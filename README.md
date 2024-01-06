@@ -94,10 +94,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ![alt text](https://raw.githubusercontent.com/Nixbu/Mancala/master/Images/main_screen.PNG)
 
 ### AI vs Player Game
-![https://github.com/Nixbu/Mancala/blob/master/Images/aivsp2.PNG?raw=true](/images/aivsp2.png)
+![alt text](https://raw.githubusercontent.com/Nixbu/Mancala/master/Images/aivsp2.PNG)
 
-### AI vs Player Game
-![https://github.com/Nixbu/Mancala/blob/master/Images/pvp.PNG?raw=true](/images/pvp.png)
+### Player vs Player Game
+![alt text](https://raw.githubusercontent.com/Nixbu/Mancala/master/Images/pvp.PNG)
 
 ### AI vs AI Game
-![https://github.com/Nixbu/Mancala/blob/master/Images/aivsai.PNG?raw=true](/images/aivsai.png)
+![alt text](https://raw.githubusercontent.com/Nixbu/Mancala/master/Images/aivsai.PNG)
